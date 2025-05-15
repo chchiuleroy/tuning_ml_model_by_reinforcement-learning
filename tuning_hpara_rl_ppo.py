@@ -125,24 +125,5 @@ for _ in range(10000):
 print("📌 最佳超參數:")
 print(best_params)
 
-best_model = PPO.load("./best_model/best_model")
+best_model = PPO.load("best_model/best_model")
 
-import matplotlib.pyplot as plt
-
-data = np.load("./best_model/evaluations.npz")
-
-timesteps = data["timesteps"]
-results = data["results"]  # 每次評估時的 reward (n_eval_episodes 個)
-mean_rewards = results.mean(axis=1)
-std_rewards = results.std(axis=1)
-
-# 繪圖 learning curve
-plt.figure(figsize=(10, 6))
-plt.plot(timesteps, mean_rewards, label="Mean reward")
-plt.fill_between(timesteps, mean_rewards - std_rewards, mean_rewards + std_rewards, alpha=0.2)
-plt.xlabel("Timesteps")
-plt.ylabel("Reward (CV Score)")
-plt.title("PPO Tuning Performance over Time")
-plt.legend()
-plt.grid()
-plt.show()
